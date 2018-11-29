@@ -19,7 +19,7 @@ class Synth extends Component {
     }
   }
 
-  componentWillMount = (e) => {
+  componentDidMount = (e) => {
     document.addEventListener('keydown', this.onKey.bind(this))
     document.addEventListener('keyup', this.offKey.bind(this))
   }

@@ -17,7 +17,6 @@ class App extends Component {
     super()
 
     this.audioContext = new AudioContext()
-
     this.state = {
       user: null,
       flashMessage: '',
@@ -40,7 +39,7 @@ class App extends Component {
   }
 
   handleChange = (event, label) => {
-    this.setState({ label: event.target.value })
+    this.setState({ [`${label}`]: event.target.value })
   }
 
   render () {
