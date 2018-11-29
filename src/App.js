@@ -94,12 +94,16 @@ class App extends Component {
             <SaveSettings flash={this.flash} user={user} />
           )} />
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
-          <h3>Chorus</h3>
-
-          <RangeSelector name='chorus rate' state='chorusRate' min='0.01' max='8' defaultValue='2.5' step='0.01' currentVal={this.state.chorusRate} handleChange={this.handleChange} />
-          <h3>Filter</h3>
-
-          <RangeSelector name='analog filter' state='filterCutOff' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.filterCutOff} handleChange={this.handleChange} />
+          <div className='effect'>
+            <h3>Chorus</h3>
+            <ToggleSwitch state='chorusToggle' currentval={this.state.chorusToggle} handleToggle={this.handleToggle}/>
+            <RangeSelector name='chorus rate' state='chorusRate' min='0.01' max='8' defaultValue='2.5' step='0.01' currentVal={this.state.chorusRate} handleChange={this.handleChange} />
+          </div>
+          <div className='effect'>
+            <h3>Filter</h3>
+            <ToggleSwitch state='filterToggle' currentval={this.state.filterToggle} handleToggle={this.handleToggle}/>
+            <RangeSelector name='analog filter' state='filterCutOff' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.filterCutOff} handleChange={this.handleChange} />
+          </div>
         </main>
       </React.Fragment>
     )
@@ -107,6 +111,3 @@ class App extends Component {
 }
 
 export default App
-
-// <ToggleSwitch state='chorusToggle' currentval={this.state.chorusToggle} handleToggle={this.handleToggle}/>
-// <ToggleSwitch state='filterToggle' currentval={this.state.filterToggle} handleToggle={this.handleToggle}/>

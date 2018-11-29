@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Switch } from 'react-mdl'
 
 class ToggleSwitch extends Component {
   constructor(props) {
@@ -9,12 +8,12 @@ class ToggleSwitch extends Component {
   render() {
     const {currentval, handleToggle, state} = this.props
     return (
-      <React.Fragment>
-        <Switch
-          checked='true'
-          onChange={(e) => handleToggle(e, state)}
-        />
-      </React.Fragment>
+      <div>
+        <label className="switch">
+          <input type="checkbox" />
+          <span className="slider round"></span>
+        </label>
+      </div>
     )
   }
 }
