@@ -1,27 +1,32 @@
 import React, { Component } from 'react'
-import { input } from 'audio-effects'
-import {Output} from 'audio-effects'
-import {Volume} from 'audio-effects'
+import Tuna from 'tunajs'
 
 class Synth extends Component {
   constructor(props) {
     super(props)
+
     this.audioContext = this.props.audioContext
+    this.tuna = new Tuna(this.audioContext)
     this.gain = this.audioContext.createGain()
     this.gain.gain.value = 0
     this.oscillator = this.audioContext.createOscillator()
     this.oscillator.frequency.value = this.props.pitch
+    this.oscillator.type = 'square'
     this.oscillator.start()
-    this.input = new Input(audioContext)
-    this.output = new Output(audioContext)
-    this.volume = new Volume(audioContext)
+    this.chorus = new this.tuna.Chorus({
+      rate: 5,
+      feedback: 0.8,
+      delay: 0.0045,
+      bypass: 0
+    })
 
     this.state = {
       oscOn: false,
       natural: this.props.natural,
       played: '',
       oscillator: null,
-      gainValue: 0
+      gainValue: 0,
+      oscType: 'sine'
     }
   }
 
@@ -34,7 +39,8 @@ class Synth extends Component {
     if(e.key === this.props.keyboard) {
       this.gain.gain.setTargetAtTime(this.props.gainValue, this.audioContext.currentTime, 0.05)
       this.oscillator.connect(this.gain)
-      this.gain.connect(this.audioContext.destination)
+      this.gain.connect(this.chorus)
+      this.chorus.connect(this.audioContext.destination)
       this.setState({ played: 'played'})
     }
   }
@@ -47,6 +53,7 @@ class Synth extends Component {
   }
 
   render () {
+    console.log(this.chorus)
     return (
       <div className={[this.state.natural, this.state.played].join(' ')}>
         <h3 >{this.props.note}</h3>
