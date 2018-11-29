@@ -74,7 +74,8 @@ class App extends Component {
               natural={note.natural}
               audioContext={this.audioContext}
               gainValue={this.state.gainValue}
-              chorusRate={this.state.chorusRate}
+              delayFeedback={this.state.delayFeedback}
+              filterCutOff={this.state.filterCutOff}
             />
           ))}
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
