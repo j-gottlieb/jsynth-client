@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 
-class ToggleSwitch extends Component {
+class LoadSave extends Component {
   constructor(props) {
     super(props)
   }
@@ -8,14 +10,18 @@ class ToggleSwitch extends Component {
   render() {
     const {currentval, handleToggle, state} = this.props
     return (
-      <div>
-        <label className="switch">
-          <input type="checkbox" />
-          <span className="slider round"></span>
-        </label>
-      </div>
+      <React.fragment>
+        <h1>Hello</h1>
+        <FormGroup controlId="formControlsSelect">
+          <ControlLabel>Select</ControlLabel>
+          <FormControl componentClass="select" placeholder="select">
+            <option value="select">select</option>
+            <option value="other">...</option>
+          </FormControl>
+        </FormGroup>
+      </React.fragment>
     )
   }
 }
 
-export default ToggleSwitch
+export default LoadSave

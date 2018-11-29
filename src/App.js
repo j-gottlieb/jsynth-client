@@ -13,6 +13,7 @@ import frequencies from './synth/Frequencies'
 import RangeSelector from './synth/RangeSelector'
 import ToggleSwitch from './synth/Toggle'
 import SaveSettings from './synth/Settings'
+import LoadSave from './synth/LoadSave'
 import {Switch} from 'react-mdl'
 
 class App extends Component {
@@ -90,8 +91,8 @@ class App extends Component {
               chorusToggle={this.state.chorusToggle}
             />
           ))}
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <SaveSettings flash={this.flash} user={user} />
+          <AuthenticatedRoute user={user} path='/save_settings' render={() => (
+            <SaveSettings user={user} />
           )} />
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
           <div className='effect'>
