@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { input } from 'audio-effects'
+import {Output} from 'audio-effects'
+import {Volume} from 'audio-effects'
 
 class Synth extends Component {
   constructor(props) {
@@ -9,6 +12,9 @@ class Synth extends Component {
     this.oscillator = this.audioContext.createOscillator()
     this.oscillator.frequency.value = this.props.pitch
     this.oscillator.start()
+    this.input = new Input(audioContext)
+    this.output = new Output(audioContext)
+    this.volume = new Volume(audioContext)
 
     this.state = {
       oscOn: false,
