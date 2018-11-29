@@ -22,7 +22,8 @@ class App extends Component {
       flashMessage: '',
       flashType: null,
       gainValue: .5,
-      chorusRate: 2.5
+      delayFeedback: 2.5,
+      filterCutOff: .5
     }
   }
 
@@ -77,7 +78,8 @@ class App extends Component {
             />
           ))}
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
-          <RangeSelector name='chorus' state='chorusRate' min='0.01' max='8' defaultValue='2.5' step='0.01' currentVal={this.state.chorusRate} handleChange={this.handleChange} />
+          <RangeSelector name='stereo delay' state='delayFeedback' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.delayFeedback} handleChange={this.handleChange} />
+          <RangeSelector name='analog filter' state='filterCutOff' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.filterCutOff} handleChange={this.handleChange} />
         </main>
       </React.Fragment>
     )
