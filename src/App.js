@@ -8,15 +8,20 @@ import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
+import Synth from './synth/Synth'
+import frequencies from './synth/Frequencies'
 
 class App extends Component {
   constructor () {
     super()
 
+    this.audioContext = new AudioContext()
+
     this.state = {
       user: null,
       flashMessage: '',
-      flashType: null
+      flashType: null,
+      gainValue: .5
     }
   }
 
@@ -33,6 +38,10 @@ class App extends Component {
     }), 2000)
   }
 
+  handleChange(event) {
+    this.setState({ gainValue: event.target.value})
+  }
+
   render () {
     const { flashMessage, flashType, user } = this.state
 
@@ -40,7 +49,7 @@ class App extends Component {
       <React.Fragment>
         <Header user={user} />
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
-        
+
         <main className="container">
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
@@ -54,6 +63,17 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword flash={this.flash} user={user} />
           )} />
+          {frequencies.map(note =>(
+            <Synth
+              key={note.note}
+              note={note.note}
+              pitch={note.pitch}
+              keyboard={note.keyboard}
+              natural={note.natural}
+              audioContext={this.audioContext}
+              gainValue={this.state.gainValue}
+            />
+          ))}
         </main>
       </React.Fragment>
     )
