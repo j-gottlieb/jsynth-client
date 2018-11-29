@@ -11,6 +11,9 @@ import ChangePassword from './auth/components/ChangePassword'
 import Synth from './synth/Synth'
 import frequencies from './synth/Frequencies'
 import RangeSelector from './synth/RangeSelector'
+import ToggleSwitch from './synth/Toggle'
+import SaveSettings from './synth/Settings'
+import {Switch} from 'react-mdl'
 
 class App extends Component {
   constructor () {
@@ -24,7 +27,9 @@ class App extends Component {
       flashType: null,
       gainValue: .5,
       chorusRate: 2.5,
-      filterCutOff: .5
+      filterCutOff: .5,
+      filterToggle: true,
+      chorusToggle: true
     }
   }
 
@@ -45,9 +50,13 @@ class App extends Component {
     this.setState({ [`${label}`]: event.target.value })
   }
 
+  handleToggle = (event, label) => {
+    this.setState({ [`${label}`]: !this.state[`${label}`] })
+  }
+
+
   render () {
     const { flashMessage, flashType, user } = this.state
-
     return (
       <React.Fragment>
         <Header user={user} />
@@ -77,10 +86,19 @@ class App extends Component {
               gainValue={this.state.gainValue}
               chorusRate={this.state.chorusRate}
               filterCutOff={this.state.filterCutOff}
+              filterToggle={this.state.filterToggle}
+              chorusToggle={this.state.chorusToggle}
             />
           ))}
+          <AuthenticatedRoute user={user} path='/change-password' render={() => (
+            <SaveSettings flash={this.flash} user={user} />
+          )} />
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
-          <RangeSelector name='chorus rate' state='chorusRate' min='0.01' max='8' defaultValue='2.5' step='0.01' currentVal={this.state.delayFeedback} handleChange={this.handleChange} />
+          <h3>Chorus</h3>
+
+          <RangeSelector name='chorus rate' state='chorusRate' min='0.01' max='8' defaultValue='2.5' step='0.01' currentVal={this.state.chorusRate} handleChange={this.handleChange} />
+          <h3>Filter</h3>
+
           <RangeSelector name='analog filter' state='filterCutOff' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.filterCutOff} handleChange={this.handleChange} />
         </main>
       </React.Fragment>
@@ -89,3 +107,6 @@ class App extends Component {
 }
 
 export default App
+
+// <ToggleSwitch state='chorusToggle' currentval={this.state.chorusToggle} handleToggle={this.handleToggle}/>
+// <ToggleSwitch state='filterToggle' currentval={this.state.filterToggle} handleToggle={this.handleToggle}/>

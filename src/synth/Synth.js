@@ -42,14 +42,24 @@ class Synth extends Component {
     document.addEventListener('keyup', this.offKey.bind(this))
   }
 
+  toggleValue(bool) {
+    if (bool) {
+      return 0
+    } else {
+      return 1
+    }
+  }
+
   onKey(e) {
     if(e.key === this.props.keyboard) {
+      this.gain.gain.setTargetAtTime(this.props.gainValue, this.audioContext.currentTime, 0.05)
       this.moog.cutoff = this.props.filterCutOff
       this.chorus.rate = this.props.chorusRate
-      this.gain.gain.setTargetAtTime(this.props.gainValue, this.audioContext.currentTime, 0.05)
-      this.oscillator.connect(this.moog)
-      this.moog.connect(this.chorus)
-      this.chorus.connect(this.gain)
+      this.moog.bypass = this.toggleValue(this.props.filterToggle)
+      this.chorus.bypass = this.toggleValue(this.props.chorusToggle)
+      this.oscillator.connect(this.chorus)
+      this.chorus.connect(this.moog)
+      this.moog.connect(this.gain)
       this.gain.connect(this.audioContext.destination)
       this.setState({ played: 'played'})
     }
