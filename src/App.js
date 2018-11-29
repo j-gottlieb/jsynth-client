@@ -10,6 +10,7 @@ import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 import Synth from './synth/Synth'
 import frequencies from './synth/Frequencies'
+import RangeSelector from './synth/RangeSelector'
 
 class App extends Component {
   constructor () {
@@ -38,8 +39,8 @@ class App extends Component {
     }), 2000)
   }
 
-  handleChange(event) {
-    this.setState({ gainValue: event.target.value})
+  handleChange = (event, label) => {
+    this.setState({ label: event.target.value })
   }
 
   render () {
@@ -74,6 +75,7 @@ class App extends Component {
               gainValue={this.state.gainValue}
             />
           ))}
+          <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' handleChange={this.handleChange} />
         </main>
       </React.Fragment>
     )
