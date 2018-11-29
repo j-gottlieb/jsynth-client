@@ -21,7 +21,8 @@ class App extends Component {
       user: null,
       flashMessage: '',
       flashType: null,
-      gainValue: .5
+      gainValue: .5,
+      chorusRate: 2.5
     }
   }
 
@@ -72,9 +73,11 @@ class App extends Component {
               natural={note.natural}
               audioContext={this.audioContext}
               gainValue={this.state.gainValue}
+              chorusRate={this.state.chorusRate}
             />
           ))}
-          <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' handleChange={this.handleChange} />
+          <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
+          <RangeSelector name='chorus' state='chorusRate' min='0.01' max='8' defaultValue='2.5' step='0.01' currentVal={this.state.chorusRate} handleChange={this.handleChange} />
         </main>
       </React.Fragment>
     )

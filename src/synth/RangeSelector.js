@@ -9,7 +9,7 @@ class RangeSelector extends Component {
     const { name, min, max, defaultValue, onChange, step, state, handleChange } = this.props
     return (
       <React.Fragment>
-        <legend>{name}</legend>
+        <legend>{name}: {this.props.currentVal}</legend>
         <input
           id={name}
           type="range"
