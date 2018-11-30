@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { handleErrors, signUp, signIn } from '../api'
-import messages from '../messages'
-import apiUrl from '../../apiConfig'
+const apiUrl = 'http://localhost:4741'
 
-
-export const apiSaveSetting = params => {
+export const apiSaveSetting = (params, user) => {
   return fetch(apiUrl + '/synth_settings', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
     },
     body: JSON.stringify({
-      credentials: {
+      synth_setting: {
         name: params.name,
         chorusrate: params.chorusrate,
         chorustoggle: params.chorustoggle,

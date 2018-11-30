@@ -12,7 +12,7 @@ import SynthKey from './synth/SynthKey'
 import frequencies from './synth/Frequencies'
 import RangeSelector from './synth/RangeSelector'
 import ToggleSwitch from './synth/Toggle'
-import SaveSettings from './synth/Settings'
+import SaveSetting from './synth/Settings'
 import LoadSave from './synth/LoadSave'
 import {Switch} from 'react-mdl'
 
@@ -101,7 +101,7 @@ class App extends Component {
             <ToggleSwitch state='filterToggle' currentval={this.state.filterToggle} handleToggle={this.handleToggle}/>
             <RangeSelector name='analog filter' state='filterCutOff' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.filterCutOff} handleChange={this.handleChange} />
           </div>
-          <Route path="/settings" component={SaveSettings} />
+          <SaveSetting user={user} />
         </main>
       </React.Fragment>
     )

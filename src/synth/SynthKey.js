@@ -57,7 +57,6 @@ class SynthKey extends Component {
   }
 
   render () {
-    console.log(this.chorus)
     return (
       <div tabIndex={0} className={[this.state.natural, this.state.played].join(' ')} onClick={e => this.toggleSynth(e)} onKeyPress={e => this.onKey(e)} onKeyUp={e => this.offKey(e)}>
         <h3>Yay</h3>

@@ -8,11 +8,13 @@ class SaveSetting extends Component {
     super()
 
     this.state = {
-      name: '',
-      chorusRate: '',
-      chorusToggle: '',
-      filterCutOff: '',
-      filterToggle: ''
+      synth_settings: {
+        name: '',
+        chorusRate: '',
+        chorusToggle: '',
+        filterCutOff: '',
+        filterToggle: ''
+      }
     }
   }
 
@@ -23,18 +25,12 @@ class SaveSetting extends Component {
   saveSetting = event => {
     event.preventDefault()
 
-    const { email, password, passwordConfirmation} = this.state
-    const { flash, history, setUser } = this.props
+    // const { email, password, passwordConfirmation} = this.state
+    // const { flash, history, setUser } = this.props
 
-    apiSaveSetting(this.state)
-      .then(handleErrors)
-      .then(() => signIn(this.state))
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(res => setUser(res.user))
-      .then(() => flash(messages.signUpSuccess, 'flash-success'))
-      .then(() => history.push('/'))
-      .catch(() => flash(messages.signUpFailure, 'flash-error'))
+    apiSaveSetting(this.state, this.props.user)
+      .then(res => console.log(res))
+      .catch(console.error())
   }
 
   render () {
@@ -42,7 +38,7 @@ class SaveSetting extends Component {
 
     return (
       <form className='settings-form' onSubmit={this.saveSetting}>
-        <h3>Sign Up</h3>
+        <h3>Save Settings</h3>
 
         <label>Name</label>
         <input
@@ -74,8 +70,8 @@ class SaveSetting extends Component {
         <label>Filter Rate</label>
         <input
           required
-          name="filterrate"
-          value={filterRate}
+          name="filtercutoff"
+          value={filterCutOff}
           type="float"
           placeholder="rate"
           onChange={this.handleChange}
