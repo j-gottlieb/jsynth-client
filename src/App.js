@@ -8,7 +8,7 @@ import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
-import Synth from './synth/Synth'
+import SynthKey from './synth/SynthKey'
 import frequencies from './synth/Frequencies'
 import RangeSelector from './synth/RangeSelector'
 import ToggleSwitch from './synth/Toggle'
@@ -19,7 +19,6 @@ import {Switch} from 'react-mdl'
 class App extends Component {
   constructor () {
     super()
-    this.audioContext = new AudioContext()
 
     this.state = {
       user: null,
@@ -31,6 +30,8 @@ class App extends Component {
       filterToggle: true,
       chorusToggle: true
     }
+    this.onKey = this.onKey.bind(this)
+    this.offKey = this.offKey.bind(this)
   }
 
   setUser = user => this.setState({ user })
@@ -54,6 +55,15 @@ class App extends Component {
     this.setState({ [`${label}`]: !this.state[`${label}`] })
   }
 
+  onKey(e) {
+    console.log(e.key)
+    return e.key
+  }
+
+  offKey(e) {
+    this.oscillator.disconnect(this.audioContext.destination)
+  }
+
   render () {
     const { flashMessage, flashType, user } = this.state
     return (
@@ -74,21 +84,12 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword flash={this.flash} user={user} />
           )} />
-          {frequencies.map(note =>(
-            <Synth
-              key={note.note}
-              note={note.note}
-              pitch={note.pitch}
-              keyboard={note.keyboard}
-              natural={note.natural}
-              audioContext={this.audioContext}
-              gainValue={this.state.gainValue}
-              chorusRate={this.state.chorusRate}
-              filterCutOff={this.state.filterCutOff}
-              filterToggle={this.state.filterToggle}
-              chorusToggle={this.state.chorusToggle}
-            />
-          ))}
+          <SynthKey
+            keyValue={e => this.onKey(e)}
+            onKey={e => this.onKey(e)}
+            offKey={e => this.offKey(e)}
+            chorusRate={this.state.chorusRate}
+          />
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
           <div className='effect'>
             <h3>Chorus</h3>

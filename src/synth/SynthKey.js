@@ -1,61 +1,72 @@
 import React, { Component } from 'react'
 import Tuna from 'tunajs'
 
-class Synth extends Component {
+class SynthKey extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      oscOn: "c6",
-      natural: this.props.natural,
+      natural: 'natural',
       played: '',
-      oscillator: null,
-      gainValue: 0,
-      oscType: 'sine'
+      key: 'a',
+      chorusRate: '5',
     }
   }
 
-  componentDidMount = (e) => {
-    document.addEventListener('keydown', this.onKey.bind(this))
-    document.addEventListener('keyup', this.offKey.bind(this))
-    console.log('constructing Synth didMount')
+  componentDidMount() {
+    this.audioContext = new AudioContext()
+    this.oscillator = this.audioContext.createOscillator()
+    this.oscillator.start()
+    this.tuna = new Tuna(this.audioContext)
+    this.chorus = new this.tuna.Chorus({
+      rate: this.state.chorusRate,         //0.01 to 8+
+      feedback: 0.4,     //0 to 1+
+      delay: 0.5,     //0 to 1
+      bypass: 0        //the value 1 starts the effect as bypassed, 0 or 1
+    })
+    this.oscillator.connect(this.chorus)
   }
 
   toggleValue(bool) {
     bool ? 0 : 1
   }
 
-  onKey(e) {
-    if(e.key === this.props.keyboard) {
-      console.log('constructing Synth onKey')
-      this.gain.gain.setTargetAtTime(this.props.gainValue, this.audioContext.currentTime, 0.05)
-      this.moog.cutoff = this.props.filterCutOff
-      this.chorus.rate = this.props.chorusRate
-      this.moog.bypass = this.toggleValue(this.props.filterToggle)
-      this.chorus.bypass = this.toggleValue(this.props.chorusToggle)
-      this.oscillator.connect(this.chorus)
-      this.chorus.connect(this.moog)
-      this.moog.connect(this.gain)
-      this.gain.connect(this.audioContext.destination)
-      this.setState({ played: 'played'})
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.ChorusRate !== prevState.chorusRate) {
+      console.log('props changed. Return an object to change state')
+      return {
+        chorusRate: nextProps.chorusRate,
+      }
     }
   }
 
+  onKey(e) {
+    this.chorus.connect(this.audioContext.destination)
+    this.setState({ played: 'played' })
+  }
+
   offKey(e) {
-    if (e.key === this.props.keyboard) {
-      this.gain.gain.setTargetAtTime(0.0000, this.audioContext.currentTime, 0.0015)
-      this.setState({ played: ''})
+    this.chorus.disconnect()
+    this.setState({ played: '' })
+  }
+
+  toggleSynth(e) {
+    if (this.state.played === 'played') {
+      this.chorus.disconnect()
+      this.setState({ played: '' })
+    } else {
+      this.chorus.connect(this.audioContext.destination)
+      this.setState({ played: 'played' })
     }
   }
 
   render () {
-    console.log('constructing Synth render')
     return (
-      <div className={[this.state.natural, this.state.played].join(' ')}>
-        <h3 >{this.props.note}</h3>
+      <div tabIndex={0} className={[this.state.natural, this.state.played].join(' ')} onClick={e => this.toggleSynth(e)} onKeyPress={e => this.onKey(e)} onKeyUp={e => this.offKey(e)}>
+        <h3>Yay</h3>
       </div>
     )
   }
 }
 
-export default Synth
+export default SynthKey

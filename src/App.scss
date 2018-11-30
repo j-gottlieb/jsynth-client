@@ -75,6 +75,12 @@ $charcoal: #ccc;
   align-items: flex-end;
 }
 
+.synthesizer {
+  width: 200px;
+  height: 200px;
+  border: 4px solid black;
+}
+
 .played {
   background-color: grey;
 }
