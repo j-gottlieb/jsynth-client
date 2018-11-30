@@ -19,7 +19,6 @@ import {Switch} from 'react-mdl'
 class App extends Component {
   constructor () {
     super()
-
     this.audioContext = new AudioContext()
 
     this.state = {
@@ -90,9 +89,6 @@ class App extends Component {
               chorusToggle={this.state.chorusToggle}
             />
           ))}
-          {user && <Route path='/save_settings' render={() => (
-            <SaveSettings user={user} />
-          )} /> }
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
           <div className='effect'>
             <h3>Chorus</h3>
@@ -104,6 +100,7 @@ class App extends Component {
             <ToggleSwitch state='filterToggle' currentval={this.state.filterToggle} handleToggle={this.handleToggle}/>
             <RangeSelector name='analog filter' state='filterCutOff' min='0' max='1' defaultValue='0.5' step='0.01' currentVal={this.state.filterCutOff} handleChange={this.handleChange} />
           </div>
+          <Route path="/settings" component={SaveSettings} />
         </main>
       </React.Fragment>
     )

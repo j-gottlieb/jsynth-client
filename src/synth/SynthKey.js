@@ -4,31 +4,9 @@ import Tuna from 'tunajs'
 class Synth extends Component {
   constructor(props) {
     super(props)
-    console.log('constructing Synth 1')
-    this.audioContext = this.props.audioContext
-    this.tuna = new Tuna(this.audioContext)
-    this.gain = this.audioContext.createGain()
-    this.gain.gain.value = 0
-    this.oscillator = this.audioContext.createOscillator()
-    this.oscillator.frequency.value = this.props.pitch
-    this.oscillator.type = 'square'
-    this.oscillator.start()
-    this.moog = new this.tuna.MoogFilter({
-      cutoff: .5,    //0 to 1
-      resonance: 2,   //0 to 4
-      bufferSize: 256,  //256 to 16384
-      bypass: 0
-    })
-
-    this.chorus = new this.tuna.Chorus({
-      rate: 5,         //0.01 to 8+
-      feedback: 0.4,     //0 to 1+
-      delay: 0.5,     //0 to 1
-      bypass: 0        //the value 1 starts the effect as bypassed, 0 or 1
-    })
 
     this.state = {
-      oscOn: false,
+      oscOn: "c6",
       natural: this.props.natural,
       played: '',
       oscillator: null,
