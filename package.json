@@ -1,6 +1,6 @@
 {
   "name": "jsynth-client",
-  "homepage": "https://j-gottlieb.github.io",
+  "homepage": "https://j-gottlieb.github.io/jsynth-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -61,7 +61,7 @@
     "make-standard": "eslint --fix .",
     "nag": "eslint .",
     "predeploy": "npm run build",
-    "deploy": "sh scripts/deploy.sh"
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "collectCoverageFrom": [

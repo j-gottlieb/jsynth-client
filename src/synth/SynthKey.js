@@ -5,6 +5,11 @@ class SynthKey extends Component {
   constructor(props) {
     super(props)
 
+    this.audioContext = new AudioContext()
+    this.oscillator = this.audioContext.createOscillator()
+    this.oscillator.start()
+    this.tuna = new Tuna(this.audioContext)
+
     this.state = {
       natural: 'natural',
       played: '',
@@ -14,17 +19,7 @@ class SynthKey extends Component {
   }
 
   componentDidMount() {
-    this.audioContext = new AudioContext()
-    this.oscillator = this.audioContext.createOscillator()
-    this.oscillator.start()
-    this.tuna = new Tuna(this.audioContext)
-    this.chorus = new this.tuna.Chorus({
-      rate: this.state.chorusRate,         //0.01 to 8+
-      feedback: 0.4,     //0 to 1+
-      delay: 0.5,     //0 to 1
-      bypass: 0        //the value 1 starts the effect as bypassed, 0 or 1
-    })
-    this.oscillator.connect(this.chorus)
+
   }
 
   toggleValue(bool) {
@@ -40,14 +35,8 @@ class SynthKey extends Component {
     }
   }
 
-  onKey(e) {
-    this.chorus.connect(this.audioContext.destination)
-    this.setState({ played: 'played' })
-  }
-
-  offKey(e) {
-    this.chorus.disconnect()
-    this.setState({ played: '' })
+  static defaultProps = {
+    chorusRate: 2.5
   }
 
   toggleSynth(e) {
@@ -55,12 +44,20 @@ class SynthKey extends Component {
       this.chorus.disconnect()
       this.setState({ played: '' })
     } else {
+      this.chorus = new this.tuna.Chorus({
+        rate: this.state.chorusRate,         //0.01 to 8+
+        feedback: 0.4,     //0 to 1+
+        delay: 0.5,     //0 to 1
+        bypass: 0        //the value 1 starts the effect as bypassed, 0 or 1
+      })
+      this.oscillator.connect(this.chorus)
       this.chorus.connect(this.audioContext.destination)
       this.setState({ played: 'played' })
     }
   }
 
   render () {
+    console.log(this.chorus)
     return (
       <div tabIndex={0} className={[this.state.natural, this.state.played].join(' ')} onClick={e => this.toggleSynth(e)} onKeyPress={e => this.onKey(e)} onKeyUp={e => this.offKey(e)}>
         <h3>Yay</h3>
