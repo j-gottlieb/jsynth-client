@@ -1,6 +1,6 @@
 {
   "name": "jsynth-client",
-  "homepage": "https://github.io/j-gottlieb",
+  "homepage": "https://github.io/j-gottlieb/jsynth-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
