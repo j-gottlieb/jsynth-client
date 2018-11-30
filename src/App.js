@@ -55,7 +55,6 @@ class App extends Component {
     this.setState({ [`${label}`]: !this.state[`${label}`] })
   }
 
-
   render () {
     const { flashMessage, flashType, user } = this.state
     return (
@@ -91,9 +90,9 @@ class App extends Component {
               chorusToggle={this.state.chorusToggle}
             />
           ))}
-          <AuthenticatedRoute user={user} path='/save_settings' render={() => (
+          {user && <Route path='/save_settings' render={() => (
             <SaveSettings user={user} />
-          )} />
+          )} /> }
           <RangeSelector name='volume' state='gainValue' min='0' max='1' defaultValue='0.5' step='0.1' currentVal={this.state.gainValue * 10} handleChange={this.handleChange} />
           <div className='effect'>
             <h3>Chorus</h3>

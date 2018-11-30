@@ -10,7 +10,7 @@ class LoadSave extends Component {
   render() {
     const {currentval, handleToggle, state} = this.props
     return (
-      <React.fragment>
+      <div>
         <h1>Hello</h1>
         <FormGroup controlId="formControlsSelect">
           <ControlLabel>Select</ControlLabel>
@@ -19,7 +19,7 @@ class LoadSave extends Component {
             <option value="other">...</option>
           </FormControl>
         </FormGroup>
-      </React.fragment>
+      </div>
     )
   }
 }

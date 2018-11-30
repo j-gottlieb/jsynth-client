@@ -10,7 +10,7 @@ class ToggleSwitch extends Component {
     return (
       <div>
         <label className="switch">
-          <input type="checkbox" />
+          <input type="checkbox" defaultChecked={currentval} onChange={(e) => handleToggle(e, state)} />
           <span className="slider round"></span>
         </label>
       </div>
