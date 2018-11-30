@@ -1,6 +1,6 @@
 {
   "name": "jsynth-client",
-  "homepage": "https://github.io/j-gottlieb/jsynth-client",
+  "homepage": "https://github.io/j-gottlieb",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -38,7 +38,6 @@
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react": "^16.4.2",
-    "react-bootstrap-validation": "^0.1.11",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.2",
     "react-mdl": "^1.11.0",
